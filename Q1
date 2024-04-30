@@ -3,7 +3,7 @@
 $lastDownloadTime = 0; // Initialize last download time
 $downloadCount = 0; // Initialize download count
 
-// Function to check download based on member type and last download time
+// Function to check download based on member type, last download time and download count.
 function checkDownload($memberType, &$lastDownloadTime, &$downloadCount) {
     
     // Get current time
