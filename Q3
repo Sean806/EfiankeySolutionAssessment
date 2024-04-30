@@ -1,0 +1,27 @@
+<?php
+
+// Function to calculate the number of days between two dates and determine if the day is odd or even
+// This function return to an array which contains both value of days and odd/even
+function calculateDaysAndOddEven($startDate, $endDate) {
+    // Create DateTime objects for the start and end dates
+    $start = new DateTime($startDate);
+    $end = new DateTime($endDate);
+
+    // Calculate the difference between the two dates & extract the number of days from the object
+    $days = ($start->diff($end))->days;
+
+    // Determine if the number of days is odd or even, by using modulus operator
+    $oddEven = ($days % 2 == 0) ? "even" : "odd";
+
+    return ["days" => $days, "oddEven" => $oddEven];
+}
+
+// Test Value
+$startDate = "2024-04-01";
+$endDate = "2024-04-15";
+
+$result = calculateDaysAndOddEven($startDate, $endDate);
+echo "Number of days between $startDate and $endDate: " . $result['days'] . "\n";
+echo "The day is " . $result['oddEven'] . "\n";
+
+?>
