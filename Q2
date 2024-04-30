@@ -1,0 +1,20 @@
+<?php
+
+function checkDiscount($purchaseValue) {
+    // Check purchase value from top to low
+    if ($purchaseValue >= 500) {
+        return "Purchase Value is $purchaseValue, discount is 10%";
+    } 
+    elseif ($purchaseValue >= 100) {
+        return "Purchase Value is $purchaseValue, discount is 5%";
+    } 
+    else {
+        return "Purchase Value is $purchaseValue, there is no discount.";
+    }
+}
+
+// Test Value
+echo checkDiscount(501) . "\n";
+echo checkDiscount(300) . "\n";
+echo checkDiscount(80) . "\n";
+?>
