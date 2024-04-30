@@ -1,0 +1,52 @@
+<?php
+// Example usage
+$lastDownloadTime = 0; // Initialize last download time
+$downloadCount = 0; // Initialize download count
+
+// Function to check download based on member type and last download time
+function checkDownload($memberType, &$lastDownloadTime, &$downloadCount) {
+    
+    // Get current time
+    $currentTime = time();
+
+    // Calculate time elapsed since last download
+    $timeElapsed = $currentTime - $lastDownloadTime;
+
+    // Check if waiting time has elapsed
+    if ($timeElapsed >= 5) {
+    	
+        // Reset Download Count after 5 seconds
+    	$downloadCount = 1;
+        
+        // Update last download time
+        $lastDownloadTime = $currentTime;
+      	
+    	echo "Your download is starting...";
+    }
+    // Check if is a member & has only download once in the last 5 seconds
+    elseif ($memberType == 'member' && $downloadCount == 1) {
+        
+        // Update last download time
+        $lastDownloadTime = $currentTime;
+       
+        // Update Download Count
+        $downloadCount = 2;
+        
+        return "Your download is starting...";
+    } 
+    else {
+        return "Too many downloads";
+    }
+}
+
+echo checkDownload('nonmember', $lastDownloadTime, $downloadCount) . "\n";
+echo checkDownload('nonmember', $lastDownloadTime, $downloadCount) . "\n"; 
+
+$lastDownloadTime = 0; // Reset last download time
+$downloadCount = 0; // Reset download count
+
+echo checkDownload('member', $lastDownloadTime, $downloadCount) . "\n";
+echo checkDownload('member', $lastDownloadTime, $downloadCount) . "\n";
+echo checkDownload('member', $lastDownloadTime, $downloadCount) . "\n";
+
+?>
