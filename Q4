@@ -1,0 +1,64 @@
+<?php
+
+// Function to generate a random item based on VIP rank
+function roll_item($vip_rank) {
+    // Item rarity tiers
+    $item_tier_rarity = [1, 2, 3, 4, 5];
+    
+    // Get index of VIP rank
+    $vip_rank_index = array_search($vip_rank, $GLOBALS['vip_ranks']); 
+    
+    // Higher chances to receiving within this tier
+    $top_tier = $vip_rank_index + 2;
+    
+    // Average the chances for getting each tier items
+    $chances = (int)(100 / $top_tier);
+    $left = 100 - ($chances * $top_tier);
+    
+    // Assign percentage to each tier
+    for ($i = 0; $i < $top_tier; $i++){
+        $item_tier_rarity[$i] = $chances;
+    }
+    
+    // Assign the remaining value to upper tier
+    $item_tier_rarity[$top_tier] = $left;
+    
+    $rand = rand(1, 100);
+    $sum = 0;
+    $chosenItem_rarity = null; // Initialize chosenItem_rarity
+
+    foreach ($item_tier_rarity as $i => $c) {
+        $sum += $c;
+        if ($sum >= $rand) {
+            $chosenItem_rarity = $i;
+            return $chosenItem_rarity;
+        }
+    }
+}
+
+// Function to print item distribution for each VIP rank
+function item_distribution($vip_ranks) {
+    $distribution_results = []; // Array to store item distribution for each VIP rank
+
+    foreach ($vip_ranks as $vip_rank) {
+        $vip_rank_array = [0, 0, 0, 0, 0]; // Initialize array to store item distribution for each VIP rank
+        // Roll item 100 times for each VIP rank
+        for ($i = 0; $i < 100; $i++) {
+            $item = roll_item($vip_rank);
+            $vip_rank_array[$item] += 1;
+        }
+        // Store item distribution result for this VIP rank
+        $distribution_results[$vip_rank] = $vip_rank_array;
+    }
+
+    // Print item distribution results for each VIP rank
+    print_r($distribution_results);
+}
+
+// Define VIP ranks
+$vip_ranks = ['vip1', 'vip2', 'vip3', 'vip4', 'vip5']; // VIP ranks
+
+// Testing
+item_distribution($vip_ranks);
+
+?>
